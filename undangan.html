@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { text-align: center; padding: 40px; }
+        .invitation { max-width: 600px; margin: auto; padding: 30px; border-radius: 12px; color: white; }
+        .template1 { background: linear-gradient(135deg, #007BFF, #0056b3); }
+        .template2 { background: linear-gradient(135deg, #FF69B4, #ff3385); }
+        .fade-in { animation: fadeIn 1s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div id="undangan" class="invitation fade-in">
+        <h1 id="judul-undangan"></h1>
+        <p id="pesan-undangan"></p>
+        <hr>
+        <p><strong>Apakah Anda akan hadir?</strong></p>
+        <button class="btn btn-light" onclick="rsvp(true)">Hadir</button>
+        <button class="btn btn-dark" onclick="rsvp(false)">Tidak Hadir</button>
+        <p id="rsvp-status" class="mt-3"></p>
+    </div>
+
+    <script>
+        function ambilQuery(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function tampilkanUndangan() {
+            const nama = ambilQuery("nama");
+            const pesan = ambilQuery("pesan");
+            const template = ambilQuery("template");
+
+            if (nama) {
+                document.getElementById("judul-undangan").textContent = `Undangan Untuk ${nama}`;
+                document.getElementById("pesan-undangan").textContent = pesan || "Kami dengan senang hati mengundang Anda untuk hadir dalam pernikahan kami.";
+                document.getElementById("undangan").classList.add(template || "template1");
+            }
+        }
+
+        function rsvp(hadir) {
+            document.getElementById("rsvp-status").textContent = hadir ? "Terima kasih! Anda telah mengonfirmasi kehadiran." : "Terima kasih! Anda tidak bisa hadir.";
+        }
+
+        tampilkanUndangan();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
